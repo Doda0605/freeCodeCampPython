@@ -1,0 +1,73 @@
+^           Matches the beginning of a line
+$           Matches the end of the line
+.           Matches any character
+\s          Matches any whitespace
+\S          Matches any non-whitespace character
+*           Repeats a character zero or more items
+*?          Repeats a character zero or more items (non-greedy)
++           Repeats a character one or more times
++?          Repeats a character one or more times (non-greedy)
+[aeiou]     Matches a single character in the listed set
+[^XYZ]      Matches a single character not in the listed listed
+[a-z0-9]    The set of characters can include a range
+(           Indicates where string extraction is to start
+)           Indicates where string extraction is to end
+
+import re
+
+re.search()     returns True/False
+re.findall()    extracts string
+
+for example
+1
+    ^X.*:
+    ^   Match the start of the line
+    .   Match any character
+    *   Zero or more times
+
+    X-Sieve: CMU Sieve 2.3  = Good
+
+2
+    ^X-\S+:
+    ^   Match the start of the line
+    \S  Match any non-whitespace characters
+    +   One or more times
+
+    X-Sieve: CMU Sieve 2.3 = Good
+    X-Plane is behind schedule: two weeks = Bad (bcs whitespace behind Plane and before :)
+
+3
+    \S+@\S+
+    \S+ At least one non-whitespace character
+
+    stephen.marquard@uct.ac.za  = Good
+
+4
+    ^From \S+@\S+
+
+    From stephen.marquard@uct.ac.za = Good
+
+5
+    ^From (\S+@\S+)
+
+    From stephen.marquard@uct.ac.za = Good
+        but we get only stephen.marquard@uct.ac.za back
+
+6   
+    @([^ ]*)
+    [^ ]    Match non-blank character
+    *       Match many of them
+    ()      Extract the non-blank characters
+
+    @uct.ac.za = Good
+
+7
+    ^X-DSPAM-Confidence: ([0-9]+)
+
+    X-DSPAM-Confidence: 0.8475 = Good
+
+8
+    \$[0-9.]+
+    \$ is a real dollar sign (\ prefixes it)
+
+    $10.00 = Good
